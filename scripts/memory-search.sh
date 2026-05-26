@@ -7,7 +7,7 @@
 #   memory-search.sh -n 20 "verification"          # top-N
 
 set -u
-ROOT="~/.claude/projects/-root/memory"
+ROOT="$HOME/.claude/projects/-root/memory"
 SCOPE=""
 TYPE=""
 TOPN=10
@@ -19,14 +19,15 @@ while getopts "s:t:n:h" opt; do
     n) TOPN="$OPTARG" ;;
     h)
       cat <<EOF
-memory-search — fast local retrieval for ~/.claude/projects/-root/memory
+memory-search — fast local retrieval for \$HOME/.claude/projects/-root/memory
 
-  -s <scope>   project-a|project-b|project-c|tools-pack|_global|project-a|project-b|project-c|tools-pack|_global|project-a|project-b|project-c|tools-pack|_global|project-a|project-b|project-c|tools-pack|_global|project-a|project-b|project-c|tools-pack|_global  (default: all)
+  -s <scope>   project-a|project-b|_global|... (default: all)
   -t <type>    feedback|project|reference|user|workflow
   -n <N>       top N results (default 10)
   <query>      one or more keywords (AND semantics)
 EOF
       exit 0 ;;
+    *) echo "usage: memory-search.sh [-s scope] [-t type] [-n N] <query...>" >&2; exit 2 ;;
   esac
 done
 shift $((OPTIND-1))
@@ -41,7 +42,12 @@ Q="$*"
 # Scope filter
 SEARCH_DIR="$ROOT"
 if [ -n "$SCOPE" ]; then
-  [ -d "$ROOT/$SCOPE" ] && SEARCH_DIR="$ROOT/$SCOPE" || { echo "scope $SCOPE not found" >&2; exit 3; }
+  if [ -d "$ROOT/$SCOPE" ]; then
+    SEARCH_DIR="$ROOT/$SCOPE"
+  else
+    echo "scope $SCOPE not found" >&2
+    exit 3
+  fi
 fi
 
 # Type filter — file name prefix convention: <type>_<scope>_<topic>.md
@@ -81,7 +87,7 @@ fi
     printf '%s\t%s\n' "${score[$f]}" "$f"
   done
 } | sort -rn -k1,1 | head -n "$TOPN" | while IFS=$'\t' read -r s f; do
-  rel="${f#$ROOT/}"
+  rel="${f#"$ROOT"/}"
   # Pull description line from frontmatter
   desc=$(awk '/^description:/{sub(/^description: */,""); print; exit}' "$f" 2>/dev/null)
   printf '%5s  %s\n' "$s" "$rel"

@@ -59,14 +59,14 @@ done < <(grep -oE '\]\(([^)]+\.md)\)' "$INDEX" | sed 's/^](//;s/)$//')
 
 # 4) Orphan files — memory files not referenced by MEMORY.md or any *_INDEX.md
 orphan=0
-all_indices=$(find "$ROOT" -maxdepth 3 \( -name 'MEMORY.md' -o -name '_INDEX.md' \) -print)
+mapfile -t all_indices < <(find "$ROOT" -maxdepth 3 \( -name 'MEMORY.md' -o -name '_INDEX.md' \) -print)
 while IFS= read -r f; do
-  rel="${f#$ROOT/}"
+  rel="${f#"$ROOT"/}"
   base=$(basename "$f")
   # Skip indices themselves
   case "$base" in MEMORY.md|_INDEX.md) continue ;; esac
   # Referenced anywhere?
-  if ! grep -l -F "$base" $all_indices >/dev/null 2>&1; then
+  if ! grep -l -F "$base" "${all_indices[@]}" >/dev/null 2>&1; then
     echo "${Y}[WARN]${N} orphan (not in any index): $rel"
     orphan=$((orphan+1))
   fi

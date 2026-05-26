@@ -29,7 +29,7 @@ EOF
   esac
 done
 
-if [ -t 1 ]; then R=$'\033[31m'; Y=$'\033[33m'; G=$'\033[32m'; C=$'\033[36m'; B=$'\033[1m'; N=$'\033[0m'; else R=; Y=; G=; C=; B=; N=; fi
+if [ -t 1 ]; then Y=$'\033[33m'; G=$'\033[32m'; C=$'\033[36m'; B=$'\033[1m'; N=$'\033[0m'; else Y=; G=; C=; B=; N=; fi
 
 SRC="$(cd "$(dirname "$0")" && pwd)"
 CLAUDE_HOME="${CLAUDE_HOME:-$HOME/.claude}"
