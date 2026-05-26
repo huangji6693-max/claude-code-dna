@@ -63,7 +63,11 @@ else
 
   # Empty file detection
   empty=$(find "$RULES_DIR" -maxdepth 1 -name '*.md' -size 0 2>/dev/null | wc -l)
-  [ "$empty" -gt 0 ] && check_fail "$empty empty rule file(s)" || check_pass "no empty rule files"
+  if [ "$empty" -gt 0 ]; then
+    check_fail "$empty empty rule file(s)"
+  else
+    check_pass "no empty rule files"
+  fi
 
   # Chinese character leftover (translation milestone v0.1.3)
   if [ "$MODE" = "repo" ]; then
@@ -84,7 +88,11 @@ if [ "$MODE" = "repo" ]; then
     check_fail "memory-system dir missing"
   else
     mem_count=$(find "$MEMORY_DIR" -maxdepth 1 -name '*.md' 2>/dev/null | wc -l)
-    [ "$mem_count" -gt 0 ] && check_pass "$mem_count memory-system file(s) present" || check_fail "no memory-system files"
+    if [ "$mem_count" -gt 0 ]; then
+      check_pass "$mem_count memory-system file(s) present"
+    else
+      check_fail "no memory-system files"
+    fi
 
     if [ -f "$MEMORY_DIR/memory-optimization.md" ]; then
       check_pass "memory-optimization.md present"
@@ -121,14 +129,22 @@ if [ ! -d "$SCRIPTS_DIR" ]; then
   check_fail "scripts dir missing: $SCRIPTS_DIR"
 else
   sh_count=$(find "$SCRIPTS_DIR" -maxdepth 1 -name '*.sh' 2>/dev/null | wc -l)
-  [ "$sh_count" -gt 0 ] && check_pass "$sh_count script(s) present" || check_fail "no scripts found"
+  if [ "$sh_count" -gt 0 ]; then
+    check_pass "$sh_count script(s) present"
+  else
+    check_fail "no scripts found"
+  fi
 
   # Shebang check
   bad_shebang=0
   while IFS= read -r f; do
     head -1 "$f" | grep -qE '^#!/usr/bin/env (bash|sh)$' || bad_shebang=$((bad_shebang+1))
   done < <(find "$SCRIPTS_DIR" -maxdepth 1 -name '*.sh' 2>/dev/null)
-  [ "$bad_shebang" -eq 0 ] && check_pass "all scripts have portable shebangs" || check_warn "$bad_shebang script(s) missing #!/usr/bin/env shebang"
+  if [ "$bad_shebang" -eq 0 ]; then
+    check_pass "all scripts have portable shebangs"
+  else
+    check_warn "$bad_shebang script(s) missing #!/usr/bin/env shebang"
+  fi
 
   # ShellCheck — only if available
   if command -v shellcheck >/dev/null 2>&1; then
@@ -157,7 +173,11 @@ if [ "$MODE" = "repo" ] && [ -n "$EXAMPLES_DIR" ]; then
   echo "${B}4. Examples${N}"
   if [ -d "$EXAMPLES_DIR" ]; then
     ex_count=$(find "$EXAMPLES_DIR" -name '*.md' 2>/dev/null | wc -l)
-    [ "$ex_count" -gt 0 ] && check_pass "$ex_count example file(s) present" || check_warn "no example files"
+    if [ "$ex_count" -gt 0 ]; then
+      check_pass "$ex_count example file(s) present"
+    else
+      check_warn "no example files"
+    fi
   else
     check_warn "examples dir missing"
   fi
