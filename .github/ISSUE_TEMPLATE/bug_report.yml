@@ -1,0 +1,53 @@
+name: 🐛 Bug report
+description: Something in the rules, scripts, or catalog is wrong or broken
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Bugs in this repo are usually one of:
+        - a script crash (`memory-health.sh` / `memory-search.sh` / `skill-spec-audit.sh`)
+        - a broken link or stale entry in `catalog/*.csv`
+        - a rule file that says one thing but the example below it does another
+        - install.sh doing something unexpected on your shell/OS
+
+  - type: input
+    id: where
+    attributes:
+      label: Where is the bug?
+      description: Path or section (e.g., `scripts/memory-health.sh`, `rules/operating-instincts.md`)
+      placeholder: scripts/memory-search.sh
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run `./scripts/memory-search.sh "foo"`
+        2. ...
+        3. Observed: ...
+        4. Expected: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        - OS: macOS 14.5 / Ubuntu 24.04 / WSL2
+        - Shell: zsh 5.9 / bash 5.2
+        - python3: 3.12
+        - Claude Code version (if relevant): ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Logs, screenshots, theories
+    validations:
+      required: false

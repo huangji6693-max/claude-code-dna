@@ -13,6 +13,9 @@ libraries (179 skills + 99 agents + Karpathy's anti-patterns + memory research).
 [![Stars](https://img.shields.io/github/stars/huangji6693-max/claude-code-dna?style=social)](https://github.com/huangji6693-max/claude-code-dna)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Spec compliant](https://img.shields.io/badge/agentskills.io-spec--compliant-green)](https://agentskills.io)
+[![Last commit](https://img.shields.io/github/last-commit/huangji6693-max/claude-code-dna)](https://github.com/huangji6693-max/claude-code-dna/commits/main)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Discussions](https://img.shields.io/github/discussions/huangji6693-max/claude-code-dna)](https://github.com/huangji6693-max/claude-code-dna/discussions)
 
 </div>
 
@@ -46,6 +49,43 @@ A 184KB drop-in package that gives Claude Code:
 | **📖 Docs** | Philosophy, decision routing tables, anti-patterns from production use |
 
 **Zero secrets. Zero project-specific data. 100% drop-in.**
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[User prompt] --> B{SessionStart}
+    B -->|always loaded| C[MEMORY.md<br/>top index ≤200 lines]
+    B -->|always loaded| D[DNA rules<br/>Karpathy + 15 instincts]
+    A --> E{Keyword trigger}
+    E -->|scope hit| F[scope/_INDEX.md<br/>lazy loaded]
+    F --> G[specific memory files]
+    A --> H{Action}
+    H -->|before any 'done'| I[Verification gate]
+    H -->|before any code| J[Karpathy 4 laws<br/>self-check]
+    H -->|before any commit| K[Two-stage review<br/>spec → quality]
+    I --> L[Confirmed done]
+    J --> M[Surgical diff]
+    K --> N[Clean commit]
+```
+
+The agent doesn't "consult" these rules — they fire as reflexes before every action.
+
+## vs. other approaches
+
+| | Awesome-lists | Skill bundles | **claude-code-dna** |
+|---|---|---|---|
+| **Ships skill source** | ❌ (links only) | ✅ | ❌ (catalog points upstream) |
+| **Behavioral rules** | ❌ | ❌ | ✅ Karpathy 4 + 15 instincts |
+| **Memory architecture** | ❌ | ❌ | ✅ mem0 + langmem + GraphRAG |
+| **Audit tooling** | ❌ | ❌ | ✅ 3 portable bash scripts |
+| **Vendor-locked** | ❌ | mostly Claude | ❌ Cursor/Codex/Gemini too |
+| **Telemetry** | ❌ | varies | ❌ never |
+| **Required deps** | none | varies (node, npm…) | bash + python3 |
+| **Drop-in install** | manual | varies | ✅ 30s |
+
+If you need skills, install them from upstream. If you need the *reflexes* that
+make any skill actually behave — that's this repo.
 
 ## Install
 
@@ -178,6 +218,43 @@ claude-code-dna/
   scripts use only `bash` + `awk` + `python3`
 - **Warp** — `agentskills.io` spec is identical between Anthropic and Warp; skill
   catalog audit applies to both
+
+## FAQ
+
+**Q: Why no vector DB for memory search?**
+At <1000 markdown files (personal/project memory scale), BM25 + a hand-tuned
+index beats embeddings on both latency and answer quality. The dimensionality
+crossover is roughly 5k–10k files. If you go past that, swap `memory-search.sh`
+for a vector backend — the rest of the architecture doesn't care.
+
+**Q: Why don't you bundle the actual skills?**
+Three reasons: (1) licensing — mixing skills from 11 different repos under one
+MIT umbrella creates attribution debt, (2) staleness — a bundled snapshot is
+stale the day after upstream releases, (3) misaligned incentives — re-distributing
+is cheap (rsync), curating is hard. The catalog points at upstream homes.
+
+**Q: How is this different from agentskills.io?**
+agentskills.io is the **spec** for how a SKILL.md file should be structured.
+This repo is **everything that fires before the agent picks a skill** — the
+reflexes, memory, and verification gates. Complementary, not competing.
+`scripts/skill-spec-audit.sh` validates skills against agentskills.io spec.
+
+**Q: Does this work with Cursor / Codex / Gemini CLI?**
+Yes. Rules are markdown — drop them into `.cursorrules`, `.cursor/rules/`,
+or any agent harness's rule directory. Memory scripts use only bash + python3.
+
+**Q: What about prompt injection in rule files?**
+Same threat surface as any markdown file your agent reads. See
+[SECURITY.md](SECURITY.md) for our policy and reporting process.
+
+**Q: Why isn't there a vector DB / RAG / autonomous loop?**
+This repo's bar is "would I miss this if it weren't there?" — every rule traces
+to a real incident, not a hypothetical capability. Aspirational features get
+rejected in PR.
+
+## Star history
+
+[![Star History Chart](https://api.star-history.com/svg?repos=huangji6693-max/claude-code-dna&type=Date)](https://star-history.com/#huangji6693-max/claude-code-dna&Date)
 
 ## Roadmap
 

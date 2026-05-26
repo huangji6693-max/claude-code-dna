@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussion
+    url: https://github.com/huangji6693-max/claude-code-dna/discussions
+    about: Questions, ideas, or anything not bug-shaped
+  - name: 🔒 Security report
+    url: https://github.com/huangji6693-max/claude-code-dna/security/advisories/new
+    about: Private vulnerability reporting (use this, not a public issue)

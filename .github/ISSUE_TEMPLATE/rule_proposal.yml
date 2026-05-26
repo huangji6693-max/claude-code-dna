@@ -1,0 +1,61 @@
+name: 🧬 Rule proposal
+description: Propose a new DNA rule or operating instinct
+labels: ["rule-proposal", "needs-incident"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every rule in this repo earns its place by passing:
+        **"would I miss this if it weren't there?"**
+
+        Aspirational rules get rejected. Read `CONTRIBUTING.md` first.
+
+  - type: input
+    id: name
+    attributes:
+      label: Proposed rule name
+      placeholder: e.g., "Always re-read CLAUDE.md after compaction"
+    validations:
+      required: true
+
+  - type: textarea
+    id: incident
+    attributes:
+      label: The incident this prevents (required)
+      description: |
+        Describe the specific failure mode you've seen. "Agents sometimes do X"
+        is not enough — give us a real session, command, or output.
+      placeholder: |
+        "On 2026-04-12 my agent kept calling a deleted API after compaction.
+         Re-reading CLAUDE.md would have caught this because line 47 says
+         the API was renamed last week."
+    validations:
+      required: true
+
+  - type: textarea
+    id: text
+    attributes:
+      label: Draft rule text
+      description: One paragraph, imperative voice, no ALL-CAPS-MUST
+    validations:
+      required: true
+
+  - type: dropdown
+    id: trigger
+    attributes:
+      label: When does it fire?
+      options:
+        - SessionStart (always loaded)
+        - Keyword-triggered (scope-specific)
+        - Pre-commit / pre-PR
+        - Post-error / debugging
+    validations:
+      required: true
+
+  - type: textarea
+    id: verify
+    attributes:
+      label: How is compliance verified?
+      placeholder: e.g., "Agent runs `head -50 CLAUDE.md` and quotes 3 invariants"
+    validations:
+      required: true

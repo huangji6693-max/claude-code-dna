@@ -12,6 +12,10 @@
 
 [![Stars](https://img.shields.io/github/stars/huangji6693-max/claude-code-dna?style=social)](https://github.com/huangji6693-max/claude-code-dna)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Spec compliant](https://img.shields.io/badge/agentskills.io-spec--compliant-green)](https://agentskills.io)
+[![Last commit](https://img.shields.io/github/last-commit/huangji6693-max/claude-code-dna)](https://github.com/huangji6693-max/claude-code-dna/commits/main)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Discussions](https://img.shields.io/github/discussions/huangji6693-max/claude-code-dna)](https://github.com/huangji6693-max/claude-code-dna/discussions)
 
 </div>
 
@@ -43,6 +47,42 @@
 | **📖 文档** | 哲学、决策路由表、生产环境反模式 |
 
 **零密钥。零项目数据。100% drop-in。**
+
+## 怎么运作
+
+```mermaid
+flowchart LR
+    A[主人提问] --> B{SessionStart}
+    B -->|始终加载| C[MEMORY.md<br/>顶层索引 ≤200 行]
+    B -->|始终加载| D[DNA 规则<br/>Karpathy + 15 直觉]
+    A --> E{关键词命中}
+    E -->|scope 命中| F[scope/_INDEX.md<br/>懒加载]
+    F --> G[具体记忆文件]
+    A --> H{动作}
+    H -->|说 done 前| I[验证门]
+    H -->|写代码前| J[Karpathy 4 律<br/>自检]
+    H -->|提交前| K[两阶段审查<br/>spec → quality]
+    I --> L[确认 done]
+    J --> M[外科手术 diff]
+    K --> N[干净 commit]
+```
+
+Agent 不是"查询"这些规则 — 它们在每个动作前作为反射触发。
+
+## 对比其他方案
+
+| | Awesome 列表 | Skill 包 | **claude-code-dna** |
+|---|---|---|---|
+| **打包 skill 源码** | ❌（只放链接） | ✅ | ❌（catalog 指向上游） |
+| **行为规则** | ❌ | ❌ | ✅ Karpathy 4 + 15 直觉 |
+| **记忆架构** | ❌ | ❌ | ✅ mem0 + langmem + GraphRAG |
+| **审计工具** | ❌ | ❌ | ✅ 3 个便携 bash 脚本 |
+| **绑定厂商** | ❌ | 多数绑 Claude | ❌ Cursor/Codex/Gemini 都行 |
+| **埋点** | ❌ | 各异 | ❌ 永不 |
+| **强制依赖** | 无 | 各异（node, npm…） | bash + python3 |
+| **drop-in 安装** | 手动 | 各异 | ✅ 30 秒 |
+
+要 skill 本身 → 上游装。要让任何 skill 真正"按反射行动"的那些直觉 → 这个仓。
 
 ## 安装
 
@@ -132,6 +172,39 @@ $ ./scripts/skill-spec-audit.sh ~/.claude/skills
 - **Cursor** — 规则是 markdown，丢进 `.cursorrules` 或 `.cursor/rules/`
 - **Codex / Gemini CLI / 任何 agent 框架** — 规则模型无关，记忆脚本只用 `bash + awk + python3`
 - **Warp** — `agentskills.io` spec Anthropic / Warp 完全一致
+
+## FAQ
+
+**问：为什么记忆搜索不用向量库？**
+个人/项目记忆规模 <1000 markdown 文件，BM25 + 手调索引在延迟和召回质量上都赢
+embedding。维度交叉点大概在 5k–10k 文件。超过了换 `memory-search.sh` 后端就行，
+架构其他部分不关心。
+
+**问：为什么不直接打包 skill 源码？**
+三个原因：(1) 许可证 — 11 个仓的 skill 混到一个 MIT 伞下创造归因债 ; (2) 过时 —
+打包快照在上游发版后第二天就过时；(3) 激励错配 — 重发只用 rsync 很便宜，但策划
+索引很难。catalog 指向每个上游的家。
+
+**问：跟 agentskills.io 什么区别？**
+agentskills.io 是 SKILL.md 文件**结构的规范**。这个仓是**在 agent 选 skill 之前
+所有要触发的东西** —— 反射、记忆、验证门。互补不冲突。`scripts/skill-spec-audit.sh`
+按 agentskills.io spec 审计你的 skill 集。
+
+**问：能用于 Cursor / Codex / Gemini CLI 吗？**
+能。规则是 markdown，丢进 `.cursorrules`、`.cursor/rules/`，或任何 agent harness
+的规则目录都行。记忆脚本只用 bash + python3。
+
+**问：rule 文件被 prompt injection 怎么办？**
+跟 agent 读的任何 markdown 文件威胁面相同。看 [SECURITY.md](SECURITY.md) 了解
+我们的政策和上报流程。
+
+**问：为什么没向量库 / RAG / 自循环？**
+这个仓的标准是"如果它没了我会怀念吗？" — 每条规则都追溯到真实事故，不是假想能力。
+"未来可能用得到"的功能 PR 阶段就拒。
+
+## Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=huangji6693-max/claude-code-dna&type=Date)](https://star-history.com/#huangji6693-max/claude-code-dna&Date)
 
 ## 致谢
 

@@ -1,0 +1,39 @@
+name: 📚 Catalog fix or attribution
+description: A catalog entry is wrong, missing, or your work is unattributed
+labels: ["catalog"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of fix
+      options:
+        - Attribution — my work is in this repo and uncredited
+        - Wrong entry — entry exists but data is incorrect
+        - Missing entry — skill/agent should be cataloged but isn't
+        - Dead link — entry's URL no longer resolves
+        - Misclassification — wrong category / keyword / compliance score
+    validations:
+      required: true
+
+  - type: input
+    id: target
+    attributes:
+      label: Catalog row or upstream URL
+      placeholder: e.g., `catalog/skills.csv:42` or https://github.com/foo/bar
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: What needs to change
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Source of truth
+      description: How can we verify? (link to your README, commit, etc.)
+    validations:
+      required: false

@@ -1,0 +1,60 @@
+# claude-code-dna
+
+> Behavioral OS for Claude Code agents — not another awesome-list. Battle-tested
+> rules + memory architecture + tooling distilled from 11 deeply-read libraries
+> (179 skills + 99 agents + Karpathy anti-patterns + memory research) that shape
+> HOW an agent thinks, decides, and remembers.
+
+## What this is
+
+- 8 rule files codifying Karpathy's 4 laws of LLM coding + 15 operating instincts
+  (verification gate before "done", TDD reflex, root cause before fix, no
+  refactor-while-fixing)
+- Memory architecture inspired by mem0 v3 (ADD-only writes), langmem (3 types ×
+  2 timings), and Microsoft GraphRAG (community-summary indexing) — designed so
+  the agent persists across sessions without bloating each conversation's context
+- 3 portable scripts: `memory-health.sh` (audit), `memory-search.sh` (BM25-style
+  local retrieval, no vector DB at this scale), `skill-spec-audit.sh` (agentskills.io
+  compliance — 168 PASS / 23 WARN / 3 FAIL on 194 community skills)
+- Curated catalog of 194 skills + 99 agents with category, trigger keyword, and
+  spec-compliance score
+
+## What this is NOT
+
+- Not a redistribution of upstream skill source code (catalog points at upstream)
+- Not a framework or plugin engine (rules are markdown, scripts are bash + awk + python3)
+- Not telemetry-emitting (zero phone-home)
+- Not tied to Claude Code only (works in Cursor, Codex, Gemini CLI — rules are
+  model-agnostic markdown)
+
+## Key documents
+
+- [README.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/README.md): English overview + 30-second install
+- [README.zh.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/README.zh.md): Chinese mirror
+- [docs/PHILOSOPHY.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/docs/PHILOSOPHY.md): three principles + 11-library attribution table
+- [CONTRIBUTING.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CONTRIBUTING.md): rule-proposal bar ("would I miss this if it weren't there?")
+- [CHANGELOG.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CHANGELOG.md): release history
+
+## Karpathy's 4 laws (the daily checklist)
+
+1. **Think before coding** — surface assumptions and trade-offs; don't silently pick one interpretation
+2. **Simplicity first** — if 200 lines work, rewrite to 50; no abstraction for single-use logic
+3. **Surgical changes** — every diff line traces back to the user's request; no refactor-while-fixing
+4. **Goal-driven execution** — weak goals = guaranteed failure; convert tasks to verifiable success criteria
+
+## The 11 libraries this draws from
+
+anthropics/skills (official agentskills.io spec) · obra/superpowers (verification + TDD reflexes) ·
+forrestchang/andrej-karpathy-skills (the 4 anti-pattern laws) · mem0ai/mem0 (ADD-only memory) ·
+langchain-ai/langmem (3 types × 2 timings) · microsoft/graphrag (community-summary indexing) ·
+ruvnet/claude-flow (multi-agent orchestration) · warpdotdev/warp (block-as-object + spec-PR) ·
+VectifyAI/PageIndex (vectorless RAG philosophy) · Karpathy public posts on LLM coding patterns ·
+private collections (operating instincts).
+
+## License
+
+MIT — commercial use free.
+
+## Author / maintainer
+
+huangji6693-max — https://github.com/huangji6693-max
