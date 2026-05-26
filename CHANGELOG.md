@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `examples/cross-harness-compatibility.md` — concrete copy-paste setup +
+  verify steps for Cursor, Codex CLI, Gemini CLI, Aider, and Continue.dev.
+  Closes the "More agent-harness compatibility examples" roadmap item.
+- README "Examples" list and `llms.txt` updated to surface the new walkthrough.
+
+### Changed
+
+- `README.md` Roadmap — marked agent-harness compatibility examples as done.
+
 ## [0.1.4] — 2026-05-26
 
 ### Added
