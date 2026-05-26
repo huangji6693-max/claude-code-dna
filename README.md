@@ -278,6 +278,8 @@ Concrete walkthroughs you can evaluate in <5 minutes each — no install require
 - [examples/verification-gate-demo.md](examples/verification-gate-demo.md) — the verification gate firing on a real regression
 - [examples/karpathy-laws-in-action.md](examples/karpathy-laws-in-action.md) — 4 before/after refactoring pairs, one per law
 - [examples/memory-workflow.md](examples/memory-workflow.md) — 3-layer memory architecture from day 1 through day 60
+- [examples/dna-doctor-demo.md](examples/dna-doctor-demo.md) — both doctor modes + real failures caught + pre-commit recipe
+- [examples/debugging-discipline-demo.md](examples/debugging-discipline-demo.md) — 4-phase debugging in action with the "3+ fails ⇒ stop" rule
 - [docs/COMPARISON.md](docs/COMPARISON.md) — honest comparison vs SuperClaude, agent-rules, memory-bank + 4 more
 - [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) — install / memory / audit / behavioral / compatibility fixes
 - [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) — three principles + 11-library attribution
