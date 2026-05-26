@@ -1,120 +1,121 @@
-# Karpathy 4 铁律 · LLM 编码反模式校正器 · 全局自动加载
+# Karpathy's 4 Laws · LLM coding anti-pattern corrector · always loaded
 
-> 来源：[Karpathy 关于 LLM 编码缺陷的公开观察](https://x.com/karpathy/status/2015883857489522876)，沉淀为 [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills) 的 4 条行为指南。
-> 本规则与已有 `operating-instincts.md` / `coding-style.md` / `10libs-dna-v2.md` **互补**：那些规则告诉你"做什么"，Karpathy 4 律告诉你"不要做什么"。
-> **每次写、改、审代码前默念一遍**。trivial 任务可以宽松，但生产代码不行。
-
----
-
-## 律 1 · Think Before Coding（先想后写 · 不掩盖困惑）
-
-**核心：不假设、不掩盖、暴露 tradeoff。**
-
-写第一行代码前自检：
-- [ ] 我有几个**没声明的假设**？（导出全部用户？哪些字段？文件路径？格式？）
-- [ ] 任务有几种**合理解读**？（"让搜索更快" → 响应/吞吐/感知速度？）
-- [ ] 有没有**更简单的方案**？有就先说出来 · 推回用户 · 不要哑巴接活
-- [ ] 有什么**模糊的地方**？停下来 · 命名困惑 · 问
-
-**反模式**：
-- 接到含糊需求直接闷头写 200 行 → 出来发现做的不是想要的
-- 多种解释里**默默挑一个** → 用户改 5 次才到正解
-- 知道更简单的路 → 不说 → 按用户字面做了一坨
-
-**合规判定**：你能不能向用户**列出 2-3 个假设并请求确认**？答不上 → 还没准备好动手。
+> Source: [Karpathy's public observations on LLM coding flaws](https://x.com/karpathy/status/2015883857489522876), distilled into 4 behavioral guidelines by [andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills).
+> This rule is **complementary** to `operating-instincts.md` / `coding-style.md` / `dna-routing-table.md`: those rules tell you "what to do", the 4 laws tell you "what NOT to do".
+> **Recite once before every write/edit/review of code.** Trivial tasks can relax this; production code cannot.
 
 ---
 
-## 律 2 · Simplicity First（极简优先 · 杜绝投机性代码）
+## Law 1 · Think Before Coding (think first · don't hide confusion)
 
-**核心：解决问题的最小代码 · 投机性的一律不要。**
+**Core: don't assume, don't hide, surface the tradeoffs.**
 
-禁止：
-- 没要求的功能 → 不写
-- 单次使用的代码 → 不抽象（不建工厂 / 不开 ABC / 不搞 Strategy 模式）
-- 没要求的"灵活性 / 可配置性" → 不加
-- 不可能发生的错误 → 不处理
-- 写到 200 行发现 50 行能搞定 → **重写**
+Pre-code self-check:
+- [ ] How many **undeclared assumptions** am I making? (Export *all* users? Which fields? File path? Format?)
+- [ ] How many **reasonable interpretations** does this task have? ("Make search faster" → response time / throughput / perceived speed?)
+- [ ] Is there a **simpler alternative**? If yes, say so · push back · don't dumbly take orders
+- [ ] Is anything **ambiguous**? Stop · name the confusion · ask
 
-**心法自问**："senior engineer 看到会不会说 overcomplicated？" → 会 → 简化。
+**Anti-patterns**:
+- Take a vague request and silently write 200 lines → turns out it wasn't what was wanted
+- **Silently pick one interpretation** out of many → user has to correct you 5 times to get back to the right one
+- Know a simpler path → don't mention it → blindly implement the literal request as a mess
 
-**反模式实例**（来自 EXAMPLES.md）：
-- "写个折扣计算" → 不是 5 个类 + Strategy + Config + Calculator · 是 `def calculate_discount(amount, percent): return amount * percent / 100`
-- "保存用户偏好" → 不是 PreferenceManager 带 cache/validator/notify/merge 4 个 flag · 是 `db.execute("UPDATE ... SET preferences=?", ...)`
-
-**红旗词**：abstract / strategy / manager / configurable / extensible / future-proof → 没有当下需求支撑 = 删。
+**Compliance test**: can you **list 2-3 assumptions and ask the user to confirm**? If not → you're not ready to start.
 
 ---
 
-## 律 3 · Surgical Changes（外科手术式修改 · 只动该动的）
+## Law 2 · Simplicity First (extreme minimalism · no speculative code)
 
-**核心：只碰必须碰的 · 只清自己制造的乱。**
+**Core: smallest code that solves the problem · zero speculation.**
 
-编辑现有代码时：
-- ❌ 不"顺手"改邻近代码、注释、格式
-- ❌ 不重构没坏的东西
-- ❌ 不强行换成"我会写的风格" → 匹配现有风格
-- ✅ 看见无关 dead code → **提一嘴 · 不删** → 让用户决定
+Forbidden:
+- Features that weren't requested → don't write
+- Single-use code → don't abstract (no factory / no ABC / no Strategy pattern)
+- "Flexibility / configurability" that wasn't requested → don't add
+- Errors that can't happen → don't handle
+- Wrote 200 lines and realize 50 would do → **rewrite**
 
-你的改动制造了孤儿（unused import / var / func）：
-- ✅ 删 **你这次改动**导致 unused 的
-- ❌ 不删**预先就存在**的 dead code（除非用户说删）
+**Self-test**: "would a senior engineer call this overcomplicated?" → if yes → simplify.
 
-**通过测试**：每一行改动都能直接追溯到用户的请求。追溯不上 = 删。
+**Concrete anti-patterns**:
+- "Write a discount calculator" → NOT 5 classes + Strategy + Config + Calculator · IS `def calculate_discount(amount, percent): return amount * percent / 100`
+- "Save user preferences" → NOT a `PreferenceManager` with cache/validator/notifier/merge and 4 flags · IS `db.execute("UPDATE ... SET preferences=?", ...)`
 
-**反模式**：
-- 用户："修这个 bug" · 你：bug 修了 + 顺便重构了 3 个文件 + 重命名了 2 个变量 → diff 200 行 · 用户审不动 · 风险扩散
-- 用户："加个字段" · 你：加完字段 + 改了周围 5 处 import 顺序 + 把 "  " 改成 "\t" → 噪声盖过信号
+**Red-flag words**: abstract / strategy / manager / configurable / extensible / future-proof → without a present-need justifying them = delete.
 
 ---
 
-## 律 4 · Goal-Driven Execution（目标驱动 · 可验证才能闭环）
+## Law 3 · Surgical Changes (only touch what must change)
 
-**核心：把任务变成可验证的目标 · 然后循环到通过。**
+**Core: only touch what's necessary · only clean up what *you* made messy.**
 
-任务 → 目标转化（必做）：
-| 模糊任务 | 可验证目标 |
+When editing existing code:
+- ❌ Don't "while I'm here" change adjacent code, comments, or formatting
+- ❌ Don't refactor things that aren't broken
+- ❌ Don't force "how I'd write it" → match existing style
+- ✅ Notice unrelated dead code → **mention it · don't delete** → let the user decide
+
+Your change created orphans (unused import / var / func):
+- ✅ Delete the ones **your change** caused to be unused
+- ❌ Do NOT delete **pre-existing** dead code (unless asked)
+
+**Passing test**: every line of change can be directly traced to the user's request. Can't trace it = delete.
+
+**Anti-patterns**:
+- User: "fix this bug" · You: fixed the bug + refactored 3 nearby files + renamed 2 variables → 200-line diff · user can't review · risk spreads
+- User: "add a field" · You: added the field + reordered 5 nearby imports + changed `  ` to `\t` → noise drowns signal
+
+---
+
+## Law 4 · Goal-Driven Execution (verifiable goals close the loop)
+
+**Core: convert the task into a verifiable goal · then loop until verified.**
+
+Task → goal transformation (required):
+
+| Vague task | Verifiable goal |
 |---|---|
-| "加输入校验" | 写覆盖非法输入的测试 → 实现到测试通过 |
-| "修这个 bug" | 写一个**重现 bug** 的失败测试 → 实现到测试通过 |
-| "重构 X" | 重构前后**测试都通过** |
-| "让它能跑" | ❌ 太弱 → 需要：跑 `<具体命令>` 输出 `<具体内容>` |
+| "Add input validation" | Write tests covering invalid input → implement to pass |
+| "Fix this bug" | Write a failing test that **reproduces the bug** → implement to pass |
+| "Refactor X" | Tests pass **both before and after** the refactor |
+| "Make it work" | ❌ Too weak → need: run `<concrete command>` and see `<concrete output>` |
 
-多步任务先列计划：
+Multi-step tasks: list the plan first:
 ```
-1. [步骤] → verify: [检查方法]
-2. [步骤] → verify: [检查方法]
-3. [步骤] → verify: [检查方法]
+1. [step] → verify: [how to check]
+2. [step] → verify: [how to check]
+3. [step] → verify: [how to check]
 ```
 
-**强 success criteria** → 你能**自循环不烦用户**
-**弱 success criteria** → 你必须每步问用户才能继续 → 失败模式
+**Strong success criteria** → you can **self-loop without bothering the user**
+**Weak success criteria** → you must ask the user every step to continue → failure mode
 
 ---
 
-## 何时应用、何时宽松
+## When to apply, when to relax
 
-| 场景 | 严格度 |
+| Scenario | Strictness |
 |---|---|
-| 生产代码 / 提交前 / PR review | **全 4 律严格** |
-| 调试 / 临时脚本 / 一次性查询 | 律 2 + 律 4（极简 + 验证） |
-| 探索原型 / spike | 律 1（先想后写） |
-| trivial typo / rename | 用判断 · 不必走完整 4 律 |
+| Production code / pre-commit / PR review | **All 4 laws strict** |
+| Debugging / ad-hoc scripts / one-off queries | Laws 2 + 4 (minimal + verify) |
+| Exploratory prototype / spike | Law 1 (think first) |
+| Trivial typo / rename | Use judgment · skip the full 4-law cycle |
 
 ---
 
-## 与已有规则的关系
+## Relationship to other rules
 
-- `operating-instincts.md` 第 1/2/3/8 条 ⇄ 本规则律 1/2/4/3 强烈对齐 · Karpathy 给出更**精炼**的语言
-- `10libs-dna-v2.md` 是**场景路由**（什么时候触发什么 skill）· 本规则是**编码反射**（每行代码前的自检）
-- `coding-style.md` 是**正面规范** · 本规则是**反面识别**
+- `operating-instincts.md` items 1/2/3/8 ⇄ this rule's laws 1/2/4/3 align strongly · Karpathy gives **sharper** language
+- `dna-routing-table.md` is **scenario routing** (which skill fires when) · this rule is **coding reflexes** (the self-check before every line of code)
+- `coding-style.md` is the **positive spec** · this rule is the **anti-pattern detector**
 
-**冲突解决**：本规则更具体 → 优先生效（specific overrides general）。
+**Conflict resolution**: this rule is more specific → wins (specific overrides general).
 
 ---
 
-## 一句话压缩
+## One-line compression
 
-> 想清楚再写、能简单别复杂、只动该动的、定义可验证的成功。
+> Think clearly before writing · prefer simple over complex · only touch what must move · define verifiable success.
 
-写代码前默念 = 减少返工 70%。这是经验值不是口号。
+Reciting before coding = ~70% reduction in rework. That's measured, not slogan.
