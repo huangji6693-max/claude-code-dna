@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] — 2026-05-26
+
+### Added
+
+- `examples/verification-gate-demo.md` — concrete before/after of the verification gate firing on a failing test
+- `examples/karpathy-laws-in-action.md` — 4 real before/after refactoring pairs, one per law, with red-flag word lists
+- `examples/memory-workflow.md` — end-to-end walkthrough of the 3-layer memory architecture from day 1 through day 60 (add → retrieve → search → health check)
+- `docs/COMPARISON.md` — honest, sharp-edged comparison vs 7 neighboring projects (SuperClaude, agent-rules, claude-token-efficient, oh-my-claudecode, karpathy-skills, memory-bank, awesome-lists) with stacking layer diagram and explicit weakness list
+- `docs/TROUBLESHOOTING.md` — install, memory script, skill-audit, behavioral, and compatibility issues with exact-cause / exact-fix pairs
+
+### Changed
+
+- `examples/` directory grew from 1 file (CLAUDE.md skeleton) to 4 files covering the full first-run experience
+
+### Notes
+
+This release is pure documentation polish — no code, no rules, no scripts changed.
+Goal: a curious clickthrough from any awesome-list submission lands on enough real
+content to evaluate the project in <5 minutes without running anything.
+
 ## [0.1.1] — 2026-05-26
 
 ### Added
