@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] — 2026-05-26
+
+### Changed
+
+- `rules/karpathy-4-laws.md` — translated from bilingual (~59% Chinese commentary)
+  to fully English; preserved all 4 laws, anti-patterns, compliance tests,
+  concrete code examples, and the when-to-apply/when-to-relax matrix
+- `rules/dna-routing-table.md` — translated to fully English; preserved all
+  11 iron laws, every scenario routing table (before/while/after code,
+  language-specific review, debugging, design, research, ops, product, meta),
+  parallel-agent orchestration rules, Context7 + Karpathy 4 laws, and the
+  5-second self-check
+- `rules/pageindex-essence.md` — translated to fully English; preserved the
+  decision matrix, 4 stealable patterns, install gotcha, and core API anchors
+- `rules/seo-geo-essence.md` — translated to fully English; preserved the
+  GEO ≠ SEO comparison, 5-phase workflow (A/B/C/D), Schema.org selection
+  table, 9 anti-patterns, and the one-line compression
+- `rules/warp-ruflo-skills-essence.md` — translated to fully English;
+  preserved 3-library positioning, 12 stealable patterns, format-interop
+  spec, and project-fit table
+- `memory-system/memory-optimization.md` — translated to fully English;
+  preserved all 8 iron laws, pre-write checklist, anti-patterns table,
+  compaction survival checklist, and v2 project-isolation strategy
+
+### Notes
+
+This release closes out the long-standing roadmap item flagged in both
+README and `docs/COMPARISON.md` ("Chinese-language origin. Some rule files
+still have Chinese commentary alongside English. Full English translation
+is on the roadmap"). All rule and memory-architecture content now reads
+as English. Behavioral content is identical — only the prose changed.
+`README.zh.md` remains as the intentional Chinese mirror.
+
 ## [0.1.2] — 2026-05-26
 
 ### Added
@@ -74,6 +107,8 @@ content to evaluate the project in <5 minutes without running anything.
 - Bilingual README (English + Chinese)
 - `install.sh` — 30-second drop-in for `~/.claude/`
 
-[Unreleased]: https://github.com/huangji6693-max/claude-code-dna/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/huangji6693-max/claude-code-dna/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/huangji6693-max/claude-code-dna/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/huangji6693-max/claude-code-dna/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/huangji6693-max/claude-code-dna/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/huangji6693-max/claude-code-dna/releases/tag/v0.1.0

@@ -277,7 +277,7 @@ Concrete walkthroughs you can evaluate in <5 minutes each — no install require
 
 ## Roadmap
 
-- [ ] English translations of all rules (current: Chinese + English mix)
+- [x] English translations of all rules (done in v0.1.3 — `README.zh.md` remains as the Chinese mirror)
 - [ ] GIF demo of the verification gate in action
 - [ ] `dna-doctor.sh` — single-command health check across rules + memory + scripts
 - [ ] Plugin for direct `~/.claude/` install via `claude-code-cli`

@@ -103,7 +103,7 @@ To match the comparison's honesty, here's where this repo is **weaker** than alt
 - **No pre-built personas/modes.** You don't get `/analyst` or `/architect` commands out of the box. Use the wshobson/agents catalog if you want those.
 - **Smaller community.** This is a young repo. SuperClaude has years of issue history; we have weeks.
 - **No CI/CD for the catalog.** Catalog entries are hand-curated. There's no nightly job verifying upstream links are still alive (yet — see roadmap).
-- **Chinese-language origin.** Some rule files still have Chinese commentary alongside English. Full English translation is on the roadmap.
+- **Chinese-language origin.** All rule files were fully translated to English in v0.1.3; `README.zh.md` remains as the intentional Chinese mirror. Translation contributions to other languages are welcome.
 
 If any of those matter to you, pick another tool — or send a PR.
 
