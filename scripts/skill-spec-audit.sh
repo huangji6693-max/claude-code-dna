@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# skill-spec-audit.sh — 按 agentskills.io spec 审计 skill 合规性
-# 来源: anthropics/skills/spec/agent-skills-spec.md
-# 用法: bash ~/.claude/scripts/skill-spec-audit.sh [skills-root]
-#       默认审计 ~/.claude/skills/
+# skill-spec-audit.sh — audit skill compliance against the agentskills.io spec
+# Source: anthropics/skills/spec/agent-skills-spec.md
+# Usage: bash ~/.claude/scripts/skill-spec-audit.sh [skills-root]
+#        Defaults to auditing ~/.claude/skills/
 
 set -u
 ROOT="${1:-~/.claude/skills}"
@@ -29,7 +29,7 @@ for dir in "$ROOT"/*/; do
   issues=()
   has_err=0
 
-  # 1) SKILL.md 存在
+  # 1) SKILL.md must exist
   if [ ! -f "$skill_md" ]; then
     issues+=("missing SKILL.md")
     has_err=1
@@ -38,7 +38,7 @@ for dir in "$ROOT"/*/; do
     continue
   fi
 
-  # 2) Frontmatter 边界
+  # 2) Frontmatter delimiters
   first=$(head -1 "$skill_md")
   if [ "$first" != "---" ]; then
     issues+=("frontmatter missing opening ---"); has_err=1
@@ -48,7 +48,7 @@ for dir in "$ROOT"/*/; do
     issues+=("frontmatter missing closing ---"); has_err=1
   fi
 
-  # 3) name 字段
+  # 3) name field
   name_val=$(awk -F': *' '/^name: *.+/ && !found {print $2; found=1}' "$skill_md" | sed 's/[[:space:]]*$//')
   if [ -z "$name_val" ]; then
     issues+=("name field missing"); has_err=1
@@ -70,7 +70,7 @@ for dir in "$ROOT"/*/; do
     fi
   fi
 
-  # 4) description 字段（仅在 frontmatter 内解析 · 兼容 yaml 单行 + 多行 |/>）
+  # 4) description field (parsed only inside frontmatter; handles single-line and YAML |/> block forms)
   desc_val=$(awk '
     NR == 1 && /^---$/ { in_fm = 1; next }
     in_fm && /^---$/ { in_fm = 0; exit }
@@ -97,14 +97,14 @@ for dir in "$ROOT"/*/; do
     issues+=("description ${#desc_val}>1024"); has_err=1
   fi
 
-  # 5) SKILL.md 行数
+  # 5) SKILL.md line count
   lines=$(wc -l < "$skill_md")
   if [ "$lines" -gt 500 ]; then
     issues+=("$lines lines >500 (split to references/)")
-    # 行数超标按 WARN（不是规范硬死，是建议）
+    # Over-cap is a WARN (the spec recommends, doesn't strictly require, the 500-line cap)
   fi
 
-  # 分类
+  # Classify
   if [ ${#issues[@]} -eq 0 ]; then
     pass=$((pass+1))
   elif [ "$has_err" -eq 1 ]; then

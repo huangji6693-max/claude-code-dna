@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# memory-health.sh — 全局记忆系统健康审计
-# 用法: bash ~/.claude/scripts/memory-health.sh [project-root]
-# 默认审计 ~/.claude/projects/-root/memory
+# memory-health.sh — global memory-system health audit
+# Usage: bash ~/.claude/scripts/memory-health.sh [project-root]
+# Defaults to auditing ~/.claude/projects/-root/memory
 
 set -u
 ROOT="${1:-~/.claude/projects/-root/memory}"
@@ -22,7 +22,7 @@ echo "${C}== MEMORY HEALTH @ $ROOT ==${N}"
 # 1) MEMORY.md size (hard cap 200 per memory-optimization.md)
 lines=$(wc -l < "$INDEX")
 if [ "$lines" -gt 200 ]; then
-  echo "${R}[ERR]${N} MEMORY.md = ${lines} lines (cap 200) — 必须收敛到子 INDEX"
+  echo "${R}[ERR]${N} MEMORY.md = ${lines} lines (cap 200) — must collapse into sub-INDEX files"
   err=$((err+1))
 elif [ "$lines" -gt 150 ]; then
   echo "${Y}[WARN]${N} MEMORY.md = ${lines} lines (approaching 200)"
@@ -34,7 +34,7 @@ fi
 # 2) File count (Karpathy: <1000 stays markdown-only)
 total=$(find "$ROOT" -name '*.md' -not -path '*/archive/*' | wc -l)
 if [ "$total" -ge 1000 ]; then
-  echo "${Y}[WARN]${N} ${total} memory files — 考虑引入向量检索"
+  echo "${Y}[WARN]${N} ${total} memory files — consider introducing vector retrieval"
   warn=$((warn+1))
 else
   echo "${G}[OK]${N} ${total} memory files (markdown-only threshold 1000)"
@@ -85,7 +85,7 @@ fi
 # 6) Strikethrough count — should be cleaned monthly
 strike=$(grep -c '^- ~~' "$INDEX" || true)
 if [ "$strike" -gt 5 ]; then
-  echo "${Y}[WARN]${N} ${strike} strikethrough entries in MEMORY.md — 月度清理"
+  echo "${Y}[WARN]${N} ${strike} strikethrough entries in MEMORY.md — clean up monthly"
   warn=$((warn+1))
 else
   echo "${G}[OK]${N} ${strike} strikethrough entries"

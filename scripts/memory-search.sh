@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# memory-search.sh — 快速本地记忆检索（BM25 风格打分，无需向量库）
-# 用法:
-#   memory-search.sh "project-a|project-b|project-c|tools-pack|_global halt"                # 全局搜
-#   memory-search.sh -s project-a|project-b|project-c|tools-pack|_global "止损"              # 限定 scope
-#   memory-search.sh -t feedback "pua"             # 限定 type
-#   memory-search.sh -n 20 "verification"          # top-N
+# memory-search.sh — fast local memory retrieval (BM25-style scoring, no vector DB needed)
+# Usage:
+#   memory-search.sh "halt"                                              # global search
+#   memory-search.sh -s project-a "stop-loss"                            # scope-restricted
+#   memory-search.sh -t feedback "pua"                                   # type-restricted
+#   memory-search.sh -n 20 "verification"                                # top-N
 
 set -u
 ROOT="$HOME/.claude/projects/-root/memory"
@@ -55,7 +55,7 @@ NAME_GLOB="*.md"
 [ -n "$TYPE" ] && NAME_GLOB="${TYPE}_*.md"
 
 # BM25-ish: count term occurrences, multiply by inverse file length, sum per file.
-# For <1000 files this beats vector DB on simplicity, is instant on ripgrep.
+# For <1000 files this beats a vector DB on simplicity and is instant on ripgrep.
 
 declare -A score
 
