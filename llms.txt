@@ -32,6 +32,11 @@
 - [README.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/README.md): English overview + 30-second install
 - [README.zh.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/README.zh.md): Chinese mirror
 - [docs/PHILOSOPHY.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/docs/PHILOSOPHY.md): three principles + 11-library attribution table
+- [docs/COMPARISON.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/docs/COMPARISON.md): honest comparison vs SuperClaude / agent-rules / memory-bank + 4 more, with stacking-layer diagram
+- [docs/TROUBLESHOOTING.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/docs/TROUBLESHOOTING.md): install / memory / audit / behavioral / compatibility fixes with exact-cause / exact-fix pairs
+- [examples/verification-gate-demo.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/verification-gate-demo.md): before/after transcript of the verification gate firing on a real regression
+- [examples/karpathy-laws-in-action.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/karpathy-laws-in-action.md): 4 before/after refactoring pairs, one per law, with red-flag word lists
+- [examples/memory-workflow.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/memory-workflow.md): end-to-end 3-layer memory architecture walkthrough from day 1 through day 60
 - [CONTRIBUTING.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CONTRIBUTING.md): rule-proposal bar ("would I miss this if it weren't there?")
 - [CHANGELOG.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CHANGELOG.md): release history
 
