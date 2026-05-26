@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] — 2026-05-26
+
+### Added
+
+- `scripts/dna-doctor.sh` — single-command health check (closes roadmap item).
+  Validates rules + memory-system + scripts in one pass. Two modes:
+  - `bash scripts/dna-doctor.sh` (default) audits the repo files; use before
+    opening a PR. 17 checks: file counts, empty-file detection, Chinese-leftover
+    detection (translation guard), portable shebangs, shellcheck pass, examples
+    presence, cross-references (README ↔ install.sh / rules / memory-system /
+    CHANGELOG), llms.txt presence.
+  - `bash scripts/dna-doctor.sh --installed` audits a live `~/.claude/` install;
+    delegates to `memory-health.sh` when a real memory store exists.
+- README "Changelog" section linking to `CHANGELOG.md`.
+
+### Changed
+
+- `README.md` Roadmap — marked dna-doctor.sh as done.
+- `install.sh` step list now mentions the doctor as a post-install verification.
+
 ## [0.1.3] — 2026-05-26
 
 ### Changed

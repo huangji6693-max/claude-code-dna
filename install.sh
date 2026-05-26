@@ -24,6 +24,8 @@ What it does:
   3. Symlinks scripts/*.sh into ~/.claude/scripts/
   4. Prints a snippet to add to your CLAUDE.md for auto-loading
   5. Runs memory-health.sh as a smoke test
+
+After install, verify with: bash scripts/dna-doctor.sh --installed
 EOF
       exit 0 ;;
   esac

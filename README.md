@@ -278,8 +278,8 @@ Concrete walkthroughs you can evaluate in <5 minutes each — no install require
 ## Roadmap
 
 - [x] English translations of all rules (done in v0.1.3 — `README.zh.md` remains as the Chinese mirror)
+- [x] `dna-doctor.sh` — single-command health check across rules + memory + scripts (v0.1.4 — run `bash scripts/dna-doctor.sh`)
 - [ ] GIF demo of the verification gate in action
-- [ ] `dna-doctor.sh` — single-command health check across rules + memory + scripts
 - [ ] Plugin for direct `~/.claude/` install via `claude-code-cli`
 - [ ] More agent-harness compatibility examples (Cursor, Codex, Gemini CLI)
 
@@ -300,6 +300,12 @@ This DNA is synthesized from 11 deeply-read libraries:
 
 If any rule is recognizably from your work and not attributed, open an issue —
 attribution will be fixed immediately.
+
+## Changelog
+
+Release notes live in [CHANGELOG.md](CHANGELOG.md). Recent: v0.1.3 finished the
+full English translation milestone; v0.1.2 surfaced `docs/COMPARISON.md` and
+`docs/PHILOSOPHY.md`.
 
 ## License
 
