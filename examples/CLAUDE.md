@@ -99,8 +99,10 @@ If the agent answers without searching — DNA is loaded. If it has to grep — 
 Then run a periodic audit:
 
 ```bash
-~/.claude/scripts/memory-health.sh
-~/.claude/scripts/skill-spec-audit.sh ~/.claude/skills
+bash scripts/dna-doctor.sh --installed   # one command — wraps everything
 ```
 
-These should be green (or have known WARN counts you've accepted).
+The doctor delegates to `memory-health.sh` when a real memory store exists,
+and runs `skill-spec-audit.sh` separately if you maintain a `~/.claude/skills/`
+directory. See [dna-doctor-demo.md](dna-doctor-demo.md) for the full
+walkthrough.

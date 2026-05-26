@@ -102,6 +102,17 @@ The installer:
 3. Prints a one-line snippet to add to your `CLAUDE.md` for auto-loading
 4. Runs a smoke test (`memory-health.sh`) to verify
 
+Then run the health check:
+
+```bash
+bash scripts/dna-doctor.sh              # validate the repo (17 checks, <1s)
+bash scripts/dna-doctor.sh --installed  # validate your live ~/.claude/ install
+```
+
+`dna-doctor` is one command that wraps shellcheck, file-presence audits, the
+translation guard, and cross-reference checks. CI runs the same script on every
+PR — if it's green locally, it'll be green on GitHub.
+
 ## What you get
 
 ### 1. Karpathy 4 Laws (the daily checklist before writing code)
