@@ -11,6 +11,7 @@
 [30 秒安装](#安装) · [包含什么](#包含什么) · [示例](examples/) · [对比](docs/COMPARISON.md) · [排错](docs/TROUBLESHOOTING.md) · [English](README.md)
 
 [![Stars](https://img.shields.io/github/stars/huangji6693-max/claude-code-dna?style=social)](https://github.com/huangji6693-max/claude-code-dna)
+[![CI](https://img.shields.io/github/actions/workflow/status/huangji6693-max/claude-code-dna/lint.yml?branch=main&label=lint)](https://github.com/huangji6693-max/claude-code-dna/actions/workflows/lint.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Spec compliant](https://img.shields.io/badge/agentskills.io-spec--compliant-green)](https://agentskills.io)
 [![Last commit](https://img.shields.io/github/last-commit/huangji6693-max/claude-code-dna)](https://github.com/huangji6693-max/claude-code-dna/commits/main)
