@@ -1,0 +1,64 @@
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  shellcheck:
+    name: ShellCheck scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
+          shellcheck scripts/*.sh install.sh || exit 1
+
+  markdown-lint:
+    name: Markdown sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify rule files have frontmatter sections or core headings
+        run: |
+          set -e
+          # Every rule file should have at least one H1 or H2
+          for f in rules/*.md memory-system/*.md; do
+            if ! grep -qE '^#{1,2} ' "$f"; then
+              echo "FAIL: $f has no top-level heading"
+              exit 1
+            fi
+          done
+          echo "All rule files have headings."
+
+      - name: Check no leaked secrets in tracked files
+        run: |
+          set -e
+          # Naive secret patterns (covers most common leaks)
+          PATTERNS='(AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z\-_]{35}|ghp_[A-Za-z0-9]{36}|sk-[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)'
+          if grep -rEn "$PATTERNS" --include='*.md' --include='*.sh' --include='*.yml' --include='*.csv' . ; then
+            echo "FAIL: potential secret detected"
+            exit 1
+          fi
+          echo "No obvious secret patterns found."
+
+  catalog-consistency:
+    name: Catalog row counts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify CSVs are non-empty and parseable
+        run: |
+          python3 - <<'PY'
+          import csv, sys
+          for path in ('catalog/skills.csv', 'catalog/agents.csv'):
+              with open(path) as f:
+                  rows = list(csv.DictReader(f))
+              if len(rows) < 10:
+                  print(f'FAIL: {path} has only {len(rows)} rows')
+                  sys.exit(1)
+              print(f'OK: {path} has {len(rows)} rows')
+          PY

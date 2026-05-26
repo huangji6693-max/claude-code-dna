@@ -1,0 +1,12 @@
+# Build artifacts
+*.backup-*
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Local staging
+_raw-skills/
+_raw-agents/
+SANITIZE_REPORT.md
