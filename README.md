@@ -39,13 +39,13 @@ no internalized reflexes for *when to think*, *when to verify*, *what to remembe
 
 ## What this is
 
-A 184KB drop-in package that gives Claude Code:
+A ~100KB drop-in (rules + memory + scripts; full repo ~370KB with catalog and docs) that gives Claude Code:
 
 | Layer | What it does |
 |---|---|
 | **🧬 Rules** (8 files, ~50KB) | Behavioral reflexes — Karpathy's 4 laws, 15 operating instincts, verification gates, debugging discipline |
 | **🧠 Memory system** | mem0 + langmem + GraphRAG-inspired architecture for cross-session persistence without context pollution |
-| **🛠 Scripts** (3 utilities) | `memory-health` (audit), `memory-search` (BM25-style retrieval, no vector DB), `skill-spec-audit` (agentskills.io compliance) |
+| **🛠 Scripts** (4 utilities) | `dna-doctor` (one-command health check, runs in CI), `memory-health` (audit), `memory-search` (BM25-style retrieval, no vector DB), `skill-spec-audit` (agentskills.io compliance) |
 | **📚 Catalog** (CSV) | Curated index of 194 skills + 99 agents with category, trigger keywords, spec-compliance scoring |
 | **📖 Docs** | Philosophy, decision routing tables, anti-patterns from production use |
 

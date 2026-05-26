@@ -24,7 +24,7 @@ adjacent problems.
 - You want the agent to **internalize reflexes** that fire without being asked (verification gate, TDD, root cause)
 - You want **cross-session memory** that doesn't bloat context (mem0 ADD-only + langmem 3-types + GraphRAG community summaries)
 - You want **audit tooling** for the skills you already installed (`skill-spec-audit.sh` against agentskills.io)
-- You want one **<200KB drop-in** instead of 5 partial overlapping packages
+- You want one **~100KB drop-in** (rules + memory + scripts) instead of 5 partial overlapping packages
 
 ### Pick **SuperClaude_Framework** instead if:
 
