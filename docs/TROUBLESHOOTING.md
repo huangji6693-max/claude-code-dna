@@ -127,6 +127,69 @@ expires_when: never
 
 ---
 
+## `dna-doctor.sh` issues
+
+### "DNA health: NEEDS ATTENTION" — what does that mean?
+
+The doctor classifies issues into three buckets:
+
+- **`[OK]`** — check passed, nothing to do
+- **`[WARN]`** — non-blocking issue (e.g., README missing a reference, file
+  approaching a soft cap). Does not affect exit code.
+- **`[FAIL]`** — hard failure (e.g., empty rule file, shellcheck error,
+  missing required file). Exits 1.
+
+"NEEDS ATTENTION" only fires when at least one `[FAIL]` is present. Warnings
+alone give "GREEN with warnings" — the script still exits 0, so CI passes.
+
+### `[WARN] rule file(s) contain Chinese characters`
+
+The v0.1.3 milestone translated every rule file to English. If you intentionally
+re-added Chinese to a rule (e.g., for `README.zh.md`), don't put it in `rules/`
+— the rules directory must stay English-only so cross-references and routing
+tables stay consistent across the agent's context window.
+
+For doc translations (READMEs, etc.) use `*.zh.md` / `*.<lang>.md` naming and
+keep them outside `rules/` and `memory-system/`. See
+[CONTRIBUTING.md → Translations](../CONTRIBUTING.md#translations).
+
+### `[WARN] memory-health.sh not installed`
+
+You're running `dna-doctor.sh --installed` but haven't yet run `./install.sh`.
+The doctor needs the helper scripts symlinked into `~/.claude/scripts/` to
+delegate the memory audit. Run the installer first.
+
+### `[WARN] no live memory store`
+
+Fresh install, no MEMORY.md yet. Expected on day one. Once the agent starts
+writing memory under `~/.claude/projects/<cwd-hash>/memory/`, the doctor will
+pick it up and run the full memory-health audit instead of warning.
+
+### `[FAIL] shellcheck` but my local lint passes
+
+You're probably running `shellcheck -S warning` locally — CI runs default
+severity (`-S style`), which catches `SC2015` (`A && B || C`), `SC2086`
+(unquoted variables), and similar style/info issues. The doctor matches CI
+exactly. If you want to reproduce CI locally:
+
+```bash
+shellcheck scripts/*.sh install.sh
+```
+
+No `-S` flag. That's what both the doctor and CI use.
+
+### Doctor passes but CI fails
+
+This shouldn't happen — the CI job and the doctor run the same script. If you
+see this:
+
+1. Pull latest `main` (someone may have added a check after your branch diverged)
+2. Re-run `bash scripts/dna-doctor.sh`
+3. If still divergent, [open an issue](https://github.com/huangji6693-max/claude-code-dna/issues/new)
+   with both outputs — that's a doctor bug.
+
+---
+
 ## `skill-spec-audit.sh` issues
 
 ### Reports FAIL on a skill that you know is correct
