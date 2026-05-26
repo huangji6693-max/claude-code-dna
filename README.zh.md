@@ -8,7 +8,7 @@
 从 11 个精读的库（179 skill + 99 agent + Karpathy 反模式 + 记忆研究）里提炼出来，
 塑造 agent *如何* 思考、决策、记忆。
 
-[30 秒安装](#安装) · [为什么需要](#为什么) · [包含什么](#包含什么) · [English](README.md)
+[30 秒安装](#安装) · [包含什么](#包含什么) · [示例](examples/) · [对比](docs/COMPARISON.md) · [排错](docs/TROUBLESHOOTING.md) · [English](README.md)
 
 [![Stars](https://img.shields.io/github/stars/huangji6693-max/claude-code-dna?style=social)](https://github.com/huangji6693-max/claude-code-dna)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -201,6 +201,17 @@ agentskills.io 是 SKILL.md 文件**结构的规范**。这个仓是**在 agent 
 **问：为什么没向量库 / RAG / 自循环？**
 这个仓的标准是"如果它没了我会怀念吗？" — 每条规则都追溯到真实事故，不是假想能力。
 "未来可能用得到"的功能 PR 阶段就拒。
+
+## 深入阅读
+
+不用 install 也能 5 分钟评估的具体走查：
+
+- [examples/verification-gate-demo.md](examples/verification-gate-demo.md) — 验证门在一次真实回退上触发的全过程
+- [examples/karpathy-laws-in-action.md](examples/karpathy-laws-in-action.md) — 4 律的 before/after 重构对照
+- [examples/memory-workflow.md](examples/memory-workflow.md) — 3 层记忆架构从 day 1 到 day 60 的完整路径
+- [docs/COMPARISON.md](docs/COMPARISON.md) — 对比 SuperClaude / agent-rules / memory-bank 等 7 个邻居项目
+- [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) — 安装 / 记忆 / 审计 / 行为 / 兼容性问题修复
+- [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) — 三大原则 + 11 库归属表
 
 ## Star 历史
 

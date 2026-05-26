@@ -8,7 +8,7 @@ Not another awesome-list. A battle-tested set of rules, memory architecture, and
 that shapes *how* the agent thinks, decides, and remembers — distilled from 11 deeply-read
 libraries (179 skills + 99 agents + Karpathy's anti-patterns + memory research).
 
-[Install in 30s](#install) · [Why this exists](#why) · [What you get](#what-you-get) · [中文](README.zh.md)
+[Install in 30s](#install) · [What you get](#what-you-get) · [Examples](examples/) · [Compare](docs/COMPARISON.md) · [Troubleshoot](docs/TROUBLESHOOTING.md) · [中文](README.zh.md)
 
 [![Stars](https://img.shields.io/github/stars/huangji6693-max/claude-code-dna?style=social)](https://github.com/huangji6693-max/claude-code-dna)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -203,8 +203,15 @@ claude-code-dna/
 ├── catalog/
 │   ├── skills.csv              # 194 skills indexed
 │   └── agents.csv              # 99 agents indexed
-├── docs/                       # Deep-dive references
-├── examples/                   # Real CLAUDE.md examples
+├── docs/
+│   ├── PHILOSOPHY.md           # Why this exists + attribution
+│   ├── COMPARISON.md           # vs SuperClaude / agent-rules / 5 more
+│   └── TROUBLESHOOTING.md      # Install / memory / audit / behavior fixes
+├── examples/
+│   ├── CLAUDE.md               # Minimal / recommended / project-layered imports
+│   ├── verification-gate-demo.md   # Before/after of the gate firing
+│   ├── karpathy-laws-in-action.md  # 4 real refactoring pairs
+│   └── memory-workflow.md      # Day-1 to day-60 walkthrough
 ├── install.sh
 ├── LICENSE
 └── README.md
@@ -251,6 +258,17 @@ Same threat surface as any markdown file your agent reads. See
 This repo's bar is "would I miss this if it weren't there?" — every rule traces
 to a real incident, not a hypothetical capability. Aspirational features get
 rejected in PR.
+
+## Read more
+
+Concrete walkthroughs you can evaluate in <5 minutes each — no install required:
+
+- [examples/verification-gate-demo.md](examples/verification-gate-demo.md) — the verification gate firing on a real regression
+- [examples/karpathy-laws-in-action.md](examples/karpathy-laws-in-action.md) — 4 before/after refactoring pairs, one per law
+- [examples/memory-workflow.md](examples/memory-workflow.md) — 3-layer memory architecture from day 1 through day 60
+- [docs/COMPARISON.md](docs/COMPARISON.md) — honest comparison vs SuperClaude, agent-rules, memory-bank + 4 more
+- [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) — install / memory / audit / behavioral / compatibility fixes
+- [docs/PHILOSOPHY.md](docs/PHILOSOPHY.md) — three principles + 11-library attribution
 
 ## Star history
 
