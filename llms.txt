@@ -39,6 +39,7 @@
 - [examples/karpathy-laws-in-action.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/karpathy-laws-in-action.md): 4 before/after refactoring pairs, one per law, with red-flag word lists
 - [examples/memory-workflow.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/memory-workflow.md): end-to-end 3-layer memory architecture walkthrough from day 1 through day 60
 - [examples/dna-doctor-demo.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/dna-doctor-demo.md): both doctor modes + real failures caught (Chinese leftover, shellcheck regression, README missing reference) + pre-commit recipe
+- [examples/debugging-discipline-demo.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/examples/debugging-discipline-demo.md): 4-phase debugging (root-cause / pattern-match / hypothesis / implement) with before/after transcripts and the "3+ fails ⇒ stop" rule in action
 - [CONTRIBUTING.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CONTRIBUTING.md): rule-proposal bar ("would I miss this if it weren't there?")
 - [CHANGELOG.md](https://github.com/huangji6693-max/claude-code-dna/blob/main/CHANGELOG.md): release history
 
