@@ -45,6 +45,16 @@ jobs:
           fi
           echo "No obvious secret patterns found."
 
+  dna-doctor:
+    name: DNA Doctor (repo health)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck (for doctor's lint check)
+        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+      - name: Run dna-doctor
+        run: bash scripts/dna-doctor.sh
+
   catalog-consistency:
     name: Catalog row counts
     runs-on: ubuntu-latest
